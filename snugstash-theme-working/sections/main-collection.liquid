@@ -1,0 +1,16 @@
+<div class="section">
+  <div class="container">
+    <h1 style="margin-bottom:1.5rem;">{{ collection.title }}</h1>
+    <div class="prod-grid">
+      {%- for product in collection.products -%}
+        <a href="{{ product.url }}" class="prod-card">
+          <div class="prod-card-img">{%- if product.featured_image -%}<img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title | escape }}">{%- endif -%}</div>
+          <div class="prod-card-body"><div class="prod-card-title">{{ product.title }}</div><div class="prod-card-price">{{ product.price | money }}</div></div>
+        </a>
+      {%- else -%}
+        <p class="muted">No products yet.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{% schema %}{ "name": "Collection", "settings": [] }{% endschema %}

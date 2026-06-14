@@ -1,0 +1,2 @@
+<div class="section"><div class="container" style="max-width:720px;"><h1 style="margin-bottom:1rem;">Search</h1><form action="{{ routes.search_url }}" method="get" style="display:flex;gap:.5rem;"><input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search…" style="flex:1;padding:.7rem 1rem;border:1.5px solid #E2E8F0;border-radius:8px;font-size:1rem;"><button class="btn btn-primary">Go</button></form></div></div>
+{% schema %}{ "name": "Search", "settings": [] }{% endschema %}

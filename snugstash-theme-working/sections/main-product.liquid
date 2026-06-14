@@ -1,0 +1,81 @@
+{%- assign cv = product.selected_or_first_available_variant -%}
+<div class="pdp-wrap">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a> › <a href="{{ routes.collections_url }}">Shop</a> › {{ product.title }}
+    </nav>
+
+    <div class="pdp">
+      <div class="pdp-gallery">
+        <div class="pdp-main-img">
+          {%- if product.featured_image -%}
+            <img id="MainImg" src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}">
+          {%- else -%}
+            <div class="ph">🧳</div>
+          {%- endif -%}
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="pdp-thumbs">
+            {%- for img in product.images limit: 5 -%}
+              <button type="button" class="pdp-thumb{% if forloop.first %} on{% endif %}" data-src="{{ img | image_url: width: 800 }}">
+                <img src="{{ img | image_url: width: 140 }}" alt="">
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="pdp-info">
+        <div class="pdp-rating"><span class="stars">★★★★★</span> <span class="muted">4.9 · 2 147 reviews</span></div>
+        <h1>{{ product.title }}</h1>
+        <div class="pdp-price">
+          <span class="price">{{ cv.price | money }}</span>
+          {%- if cv.compare_at_price > cv.price -%}<span class="was">{{ cv.compare_at_price | money }}</span>{%- endif -%}
+        </div>
+        <p class="stock">✓ In stock — ships within 24h</p>
+
+        {%- comment -%} NATIVE Shopify form — no JS. Submits to /cart/add and redirects to /cart {%- endcomment -%}
+        <form method="post" action="/cart/add" id="ProductForm" accept-charset="UTF-8" enctype="multipart/form-data">
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="✓">
+
+          {%- unless product.has_only_default_variant -%}
+            <div class="variant-select">
+              <label class="vlabel" for="VariantSelect">Option</label>
+              <select name="id" id="VariantSelect" class="vselect">
+                {%- for v in product.variants -%}
+                  <option value="{{ v.id }}"{% unless v.available %} disabled{% endunless %}{% if v == cv %} selected{% endif %}>
+                    {{ v.title }} — {{ v.price | money }}{% unless v.available %} (sold out){% endunless %}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- else -%}
+            <input type="hidden" name="id" value="{{ cv.id }}">
+          {%- endunless -%}
+
+          <div class="qty-row">
+            <label class="vlabel" for="Qty">Quantity</label>
+            <input type="number" id="Qty" name="quantity" value="1" min="1" class="qty-in">
+          </div>
+
+          <button type="submit" name="add" class="btn btn-primary btn-lg btn-full"{% unless product.available %} disabled{% endunless %}>
+            {%- if product.available -%}Add to cart — {{ cv.price | money }}{%- else -%}Sold out{%- endif -%}
+          </button>
+        </form>
+
+        <div class="guarantees">
+          <div>🚚 Free EU shipping over 500 kr</div>
+          <div>🔄 30-day money-back guarantee</div>
+          <div>🔒 Secure checkout · Klarna, Visa, Mastercard, PayPal</div>
+        </div>
+
+        {%- if product.description != blank -%}<div class="pdp-desc rte">{{ product.description }}</div>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Product", "settings": [] }
+{% endschema %}

@@ -1,0 +1,22 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-brand">✈️ Snug<span>Stash</span></div>
+      <p class="muted" style="font-size:.875rem;">The travel pillow that carries your clothes.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <a href="{{ routes.collections_url }}">All products</a>
+      <a href="/pages/faq">FAQ</a>
+      <a href="/pages/contact">Contact</a>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <a href="{{ routes.root_url }}policies/refund-policy">Returns</a>
+      <a href="{{ routes.root_url }}policies/shipping-policy">Shipping</a>
+      <a href="{{ routes.root_url }}policies/privacy-policy">Privacy</a>
+    </div>
+  </div>
+  <div class="container footer-bottom">© {{ 'now' | date: '%Y' }} SnugStash. All rights reserved.</div>
+</footer>
+{% schema %}{ "name": "Footer", "settings": [] }{% endschema %}

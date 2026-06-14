@@ -1,0 +1,50 @@
+<div class="section">
+  <div class="container" style="max-width:880px;">
+    <h1 style="margin-bottom:1.5rem;">Your Cart</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form method="post" action="/cart" id="CartForm">
+        <div class="cart-lines">
+          {%- for item in cart.items -%}
+            <div class="cart-row">
+              <a href="{{ item.url }}" class="cart-row-img">
+                {%- if item.image -%}<img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}">{%- endif -%}
+              </a>
+              <div class="cart-row-info">
+                <div class="cart-row-title">{{ item.product.title }}</div>
+                {%- if item.variant.title != 'Default Title' -%}<div class="muted">{{ item.variant.title }}</div>{%- endif -%}
+                <div class="cart-row-price">{{ item.final_line_price | money }}</div>
+              </div>
+              <div class="cart-row-qty">
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity">
+              </div>
+              <a href="/cart/change?id={{ item.key }}&quantity=0" class="cart-row-remove" aria-label="Remove">✕</a>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="cart-foot">
+          <button type="submit" name="update" class="btn btn-ghost-dark">Update cart</button>
+          <div class="cart-foot-right">
+            <div class="cart-subtotal">
+              <span>Subtotal</span>
+              <strong>{{ cart.total_price | money }}</strong>
+            </div>
+            <p class="muted" style="font-size:.8rem;margin:.25rem 0 1rem;">Shipping & taxes calculated at checkout</p>
+            <button type="submit" name="checkout" class="btn btn-primary btn-lg btn-full">Checkout →</button>
+          </div>
+        </div>
+      </form>
+    {%- else -%}
+      <div style="text-align:center;padding:4rem 0;">
+        <p style="font-size:3rem;">🧳</p>
+        <h2 style="margin:.5rem 0 1rem;">Your cart is empty</h2>
+        <a href="{{ routes.collections_url }}" class="btn btn-primary btn-lg">Shop now →</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

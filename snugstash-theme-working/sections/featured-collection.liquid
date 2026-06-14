@@ -1,0 +1,21 @@
+<section class="section">
+  <div class="container">
+    <div class="sec-head"><h2>Shop SnugStash</h2></div>
+    {%- assign products = collections['frontpage'].products -%}
+    {%- if products.size == 0 -%}{%- assign products = collections.all.products -%}{%- endif -%}
+    <div class="prod-grid">
+      {%- for product in products limit: 4 -%}
+        <a href="{{ product.url }}" class="prod-card">
+          <div class="prod-card-img">{%- if product.featured_image -%}<img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.title | escape }}">{%- endif -%}</div>
+          <div class="prod-card-body">
+            <div class="prod-card-title">{{ product.title }}</div>
+            <div class="prod-card-price">{{ product.price | money }}</div>
+          </div>
+        </a>
+      {%- else -%}
+        <p class="muted">Add products to your <strong>frontpage</strong> collection to show them here.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}{ "name": "Featured Collection", "settings": [], "presets": [{ "name": "Featured Collection" }] }{% endschema %}

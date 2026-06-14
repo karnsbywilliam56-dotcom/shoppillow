@@ -1,0 +1,22 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="{{ routes.root_url }}" class="logo">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: height: 36 }}" alt="{{ shop.name }}" height="36">
+      {%- else -%}
+        ✈️ Snug<span>Stash</span>
+      {%- endif -%}
+    </a>
+    <nav class="header-nav">
+      <a href="{{ routes.root_url }}">Home</a>
+      <a href="{{ routes.collections_url }}">Shop</a>
+      <a href="/pages/faq">FAQ</a>
+    </nav>
+    <a href="{{ routes.cart_url }}" class="cart-btn">
+      🛒 Cart{% if cart.item_count > 0 %} <span class="cart-badge">{{ cart.item_count }}</span>{% endif %}
+    </a>
+  </div>
+</header>
+{% schema %}
+{ "name": "Header", "settings": [{ "type": "image_picker", "id": "logo", "label": "Logo" }] }
+{% endschema %}

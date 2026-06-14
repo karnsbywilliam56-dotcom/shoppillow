@@ -1,0 +1,17 @@
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag">✈️ The smart traveller's secret</div>
+      <h1>Pack More.<br>Pay <em>Nothing Extra.</em></h1>
+      <p class="hero-sub">The travel pillow with a hidden compartment. Carry extra clothes on board — no baggage fees.</p>
+      {%- assign hp = collections['frontpage'].products.first | default: collections.all.products.first -%}
+      <a href="{{ hp.url | default: routes.collections_url }}" class="btn btn-white btn-lg">Shop now{% if hp %} — {{ hp.price | money }}{% endif %}</a>
+    </div>
+    {%- if section.settings.image -%}
+      <div class="hero-img"><img src="{{ section.settings.image | image_url: width: 560 }}" alt="SnugStash"></div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Hero", "settings": [{ "type": "image_picker", "id": "image", "label": "Hero image" }], "presets": [{ "name": "Hero" }] }
+{% endschema %}

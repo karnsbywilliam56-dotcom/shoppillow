@@ -1,0 +1,14 @@
+<div class="section">
+  <div class="container">
+    <h1 style="margin-bottom:1.5rem;">Collections</h1>
+    <div class="prod-grid">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="prod-card">
+          <div class="prod-card-img">{%- if collection.image -%}<img src="{{ collection.image | image_url: width: 500 }}" alt="{{ collection.title | escape }}">{%- endif -%}</div>
+          <div class="prod-card-body"><div class="prod-card-title">{{ collection.title }}</div></div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+{% schema %}{ "name": "Collections List", "settings": [] }{% endschema %}
